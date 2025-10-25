@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace WebStore.Model
 {
-    public class User
+    public class User : IdentityUser<int> 
     {
-        public int IdentityUser { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime RegistrationDate { get; set; }
