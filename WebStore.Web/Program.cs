@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.EF;
 using WebStore.Model;
 using Microsoft.AspNetCore.Identity;
+using WebStore.Services.Interfaces;
+using WebStore.Services.ConcreteServices;
+using WebStore.Services.Configuration.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,12 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     options.Password.RequireUppercase = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Rejestracja AutoMappera (przeskanuje projekt w poszukiwaniu profili)
+builder.Services.AddAutoMapper(typeof(MainProfile));
+
+// Rejestracja serwisów (mówimy: "gdy ktoś prosi o IProductService, daj mu ProductService")
+builder.Services.AddTransient<IProductService, ProductService>();
 
 builder.Services.AddControllersWithViews();
 
