@@ -10,6 +10,10 @@ namespace WebStore.Services.Configuration.Profiles
         {
             CreateMap<AddOrUpdateProductVm, Product>();
             CreateMap<Product, ProductVm>();
+
+            CreateMap<Address, AddressVm>();
+            CreateMap<AddOrUpdateAddressVm, Address>();
+            CreateMap<Address, AddOrUpdateAddressVm>();
         }
     }
 }

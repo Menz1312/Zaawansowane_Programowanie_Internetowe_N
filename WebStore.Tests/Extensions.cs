@@ -10,8 +10,19 @@ namespace WebStore.Tests {
             var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext> ();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>> ();
             var roleManager = serviceProvider
-            .GetRequiredService<RoleManager<IdentityRole<int>>> ();
+            .GetRequiredService<RoleManager<IdentityRole<int>>>();
             // other seed data ...
+            //Customers
+            var customer1 = new Customer()
+            {
+                Id = 2, // Użyj innego Id niż Supplier (który ma Id = 1)
+                FirstName = "Jan",
+                LastName = "Kowalski",
+                UserName = "customer1@eg.eg",
+                Email = "customer1@eg.eg",
+                RegistrationDate = new DateTime(2023, 1, 1),
+            };
+            await userManager.CreateAsync(customer1, "User1234");
             //Suppliers
             var supplier1 = new Supplier () {
                 Id = 1,

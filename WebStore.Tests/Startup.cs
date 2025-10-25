@@ -26,7 +26,8 @@ namespace WebStore.Tests {
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
             services.AddTransient (typeof (ILogger), typeof (Logger<Startup>));
             // service binding
-            services.AddTransient<IProductService, ProductService> ();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IAddressService, AddressService>();
             // … other bindings…
             services.SeedData ();
         }

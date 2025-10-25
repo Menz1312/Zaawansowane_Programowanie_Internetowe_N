@@ -27,13 +27,14 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
 })
-.AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Rejestracja AutoMappera (przeskanuje projekt w poszukiwaniu profili)
 builder.Services.AddAutoMapper(typeof(MainProfile));
 
 // Rejestracja serwisów (mówimy: "gdy ktoś prosi o IProductService, daj mu ProductService")
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IAddressService, AddressService>();
 
 builder.Services.AddControllersWithViews();
 
