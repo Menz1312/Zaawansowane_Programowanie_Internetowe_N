@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +12,12 @@ namespace WebStore.Tests {
     public class Startup {
         public void ConfigureServices (IServiceCollection services) {
             services.AddAutoMapper (typeof (MainProfile));
-            services.AddEntityFrameworkInMemoryDatabase ()
-                .AddDbContext<ApplicationDbContext> (options =>
-                    options.UseInMemoryDatabase ("InMemoryDb")
-                );
+            services.AddEntityFrameworkInMemoryDatabase()
+                .AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("InMemoryDb");
+                    options.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+                });
             services.AddIdentity<User, IdentityRole<int>> (options => {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequiredLength = 6;
@@ -28,6 +31,9 @@ namespace WebStore.Tests {
             // service binding
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IStoreService, StoreService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IInvoiceService, InvoiceService>();
             // … other bindings…
             services.SeedData ();
         }

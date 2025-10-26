@@ -5,7 +5,7 @@ using WebStore.Model;
 namespace WebStore.Tests {
     public static class Extensions {
         // Create sample data
-        public static async void SeedData (this IServiceCollection services) {
+        public static void SeedData (this IServiceCollection services) {
             var serviceProvider = services.BuildServiceProvider ();
             var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext> ();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>> ();
@@ -22,7 +22,7 @@ namespace WebStore.Tests {
                 Email = "customer1@eg.eg",
                 RegistrationDate = new DateTime(2023, 1, 1),
             };
-            await userManager.CreateAsync(customer1, "User1234");
+            userManager.CreateAsync(customer1, "User1234").GetAwaiter().GetResult();
             //Suppliers
             var supplier1 = new Supplier () {
                 Id = 1,
@@ -32,14 +32,14 @@ namespace WebStore.Tests {
                 Email = "supp1@eg.eg",
                 RegistrationDate = new DateTime (2010, 1, 1),
             };
-            await userManager.CreateAsync (supplier1, "User1234");
+            userManager.CreateAsync (supplier1, "User1234").GetAwaiter().GetResult();
             //Categories
             var category1 = new Category () {
                 Id = 1,
                 Name = "Computers",
                 Tag = "#computer"
             };
-            await dbContext.AddAsync (category1);
+            dbContext.Add (category1);
             //Products
             var p1 = new Product () {
                 Id = 1,
@@ -48,10 +48,10 @@ namespace WebStore.Tests {
                 Description = "Bardzo praktyczny monitor 32 cale",
                 ImageBytes = new byte[] { 0xff, 0xff, 0xff, 0x80 },
                 Name = "Monitor Dell 32",
-                Price = 1000,
+                Price = 2000,
                 Weight = 20,
             };
-            await dbContext.AddAsync (p1);
+            dbContext.Add (p1);
             var p2 = new Product () {
                 Id = 2,
                 Category = category1,
@@ -62,9 +62,9 @@ namespace WebStore.Tests {
                 Price = 500,
                 Weight = 0.5f,
             };
-            await dbContext.AddAsync (p2);
+            dbContext.Add (p2);
             // save changes
-            await dbContext.SaveChangesAsync ();
+            dbContext.SaveChanges ();
         }
     }
 }

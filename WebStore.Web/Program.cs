@@ -35,6 +35,9 @@ builder.Services.AddAutoMapper(typeof(MainProfile));
 // Rejestracja serwisów (mówimy: "gdy ktoś prosi o IProductService, daj mu ProductService")
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IAddressService, AddressService>();
+builder.Services.AddTransient<IStoreService, StoreService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IInvoiceService, InvoiceService>();
 
 builder.Services.AddControllersWithViews();
 
